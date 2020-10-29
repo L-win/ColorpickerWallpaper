@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import android.app.WallpaperManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,14 +14,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class MainActivity extends AppCompatActivity {
 
-    ConstraintLayout layout;
+    LinearLayout layout;
     int defaultColor;
-    Button button;
+    Button buttonColorPicker;
+    Button buttonSetWallpaper;
     ImageView imageView;
 
     Bitmap bitmap = null;
@@ -30,14 +34,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // PREPARE VIEWS
         layout = findViewById(R.id.layout);
         defaultColor = ContextCompat.getColor(MainActivity.this, R.color.design_default_color_primary);
         imageView = findViewById(R.id.image);
-        button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonColorPicker = findViewById(R.id.open_colorpicker);
+        buttonSetWallpaper = findViewById(R.id.set_wallpaper);
+
+        // SET BUTTONS
+        buttonColorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openColorPicker();
+            }
+        });
+        buttonSetWallpaper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setWallpaper();
             }
         });
     }
@@ -52,25 +67,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 defaultColor = color;
-                layout.setBackgroundColor(defaultColor);
+//                layout.setBackgroundColor(defaultColor);
                 setColorDrawable();
-                imageView.setImageBitmap(getbitmap());
+                setbitmap();
+                imageView.setImageBitmap(bitmap);
             }
         });
         colorPicker.show();
     }
 
-    public Bitmap getbitmap() {
-        Bitmap bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
+    public void setbitmap() {
+        bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         cd.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         cd.draw(canvas);
-        return bitmap;
     }
 
     public void setColorDrawable() {
         cd = new ColorDrawable(defaultColor);
     }
 
-
+    public void setWallpaper() {
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
+        try {
+            wallpaperManager.setBitmap(bitmap);
+            Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Error.", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
