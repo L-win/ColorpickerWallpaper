@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         // SET TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         setTitle("Colorpicker Wallpaper");
 
         // PREPARE VIEWS
