@@ -1,6 +1,7 @@
 package com.elvina.colorpickerwallpaper;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
@@ -11,6 +12,8 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,7 +24,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class MainActivity extends AppCompatActivity {
 
-    LinearLayout layout;
+    ConstraintLayout layout;
     int defaultColor;
     Button buttonColorPicker;
     Button buttonSetWallpaper;
@@ -35,12 +38,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // SET TOOLBAR
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("Colorpicker Wallpaper");
+
         // PREPARE VIEWS
         layout = findViewById(R.id.layout);
         defaultColor = ContextCompat.getColor(MainActivity.this, R.color.design_default_color_primary);
         imageView = findViewById(R.id.image);
         buttonColorPicker = findViewById(R.id.open_colorpicker);
         buttonSetWallpaper = findViewById(R.id.set_wallpaper);
+
+        bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
 
         // SET BUTTONS
         buttonColorPicker.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setbitmap() {
-        bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
+//        bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         cd.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         cd.draw(canvas);
@@ -95,5 +105,12 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(this, "Error.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+        return true;
     }
 }
