@@ -11,6 +11,6 @@
 
     <color name="appBackground">#ff6a28</color>
 
-    <color name="aboutTextMain">#FFFFFF</color>
-    <color name="aboutTetxtSecond">#FFFFFF</color>
+    <color name="aboutTextMain">#000000</color>
+    <color name="aboutTetxtSecond">#393939</color>
 </resources>
