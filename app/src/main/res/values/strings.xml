@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Colorpicker Wallpaper</string>
+    <string name="app_developer">
+        Developed by Elvin A.
+        \ngithub.com/L-win
+        \n2020
+    </string>
+    <string name="app_current_version">v1.0, November 2020</string>
+    <string name="app_recent_change">Nov 1, 2020. First release.</string>
 </resources>
