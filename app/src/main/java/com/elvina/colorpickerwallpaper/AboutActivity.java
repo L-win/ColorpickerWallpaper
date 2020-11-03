@@ -17,6 +17,8 @@ public class AboutActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("About");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 }
