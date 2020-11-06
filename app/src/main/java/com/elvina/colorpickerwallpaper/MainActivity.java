@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
 
     Bitmap bitmap = null;
-    ColorDrawable cd;
+    ColorDrawable colorDrawable;
+    GradientDrawable gradientDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
         // PREPARE VIEWS
         layout = findViewById(R.id.layout);
-        defaultColor = ContextCompat.getColor(MainActivity.this, R.color.design_default_color_primary);
+        defaultColor = ContextCompat.getColor(MainActivity.this, R.color.white);
         imageView = findViewById(R.id.image);
         buttonColorPicker = findViewById(R.id.open_colorpicker);
         buttonSetWallpaper = findViewById(R.id.set_wallpaper);
 
+        // CREATE BITMAP
         bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
 
         // SET BUTTONS
@@ -69,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
                 setWallpaper();
             }
         });
+
+        // TEST
+//        System.out.println("Test-1: "+defaultColor);
     }
 
     public void openColorPicker() {
@@ -81,24 +87,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 defaultColor = color;
-//                layout.setBackgroundColor(defaultColor);
-                setColorDrawable();
-                setbitmap();
+//                setColorDrawable();
+//                setBitmapSolid();
+                setGradientDrawable();
+                setBitmapGradient();
                 imageView.setImageBitmap(bitmap);
             }
         });
         colorPicker.show();
     }
 
-    public void setbitmap() {
+    public void setBitmapSolid() {
 //        bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        cd.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        cd.draw(canvas);
+        colorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        colorDrawable.draw(canvas);
+    }
+
+    public void setBitmapGradient(){
+        Canvas canvas = new Canvas(bitmap);
+        gradientDrawable.setBounds(0,0,canvas.getWidth(),canvas.getHeight());
+        gradientDrawable.draw(canvas);
     }
 
     public void setColorDrawable() {
-        cd = new ColorDrawable(defaultColor);
+        colorDrawable = new ColorDrawable(defaultColor);
+    }
+
+    public void setGradientDrawable(){
+        int colors[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };
+        gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
     }
 
     public void setWallpaper() {
