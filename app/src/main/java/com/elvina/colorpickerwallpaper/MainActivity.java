@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setBitmapSolid() {
-//        bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         colorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         colorDrawable.draw(canvas);
@@ -115,7 +114,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setGradientDrawable(){
-        int colors[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };
+//        int colors[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };
+        int colors[] = { 0xff255779 , 0xFFABDFFF };
+
         gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
     }
 
