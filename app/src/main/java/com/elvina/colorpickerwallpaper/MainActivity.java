@@ -33,9 +33,11 @@ public class MainActivity extends AppCompatActivity {
     int defaultColor;
     Button buttonColorPickerSolid, buttonSetWallpaper, buttonSwitchSolid, buttonSwitchGradient;
     Button buttonColorPickerGradientA, buttonColorPickerGradientB;
-    ImageView imageViewSolid;
+    ImageView imageViewSolid, imageViewGradientA, imageViewGradientB;
 
-    Bitmap bitmap = null;
+    Bitmap bitmapSolid = null;
+    Bitmap bitmapGradientA = null;
+    Bitmap bitmapGradientB = null;
     ColorDrawable colorDrawable;
     GradientDrawable gradientDrawable;
 
@@ -54,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
         prepareViews();
 
         // CREATE BITMAP
-        bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
+        bitmapSolid = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
+        bitmapGradientA = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
+        bitmapGradientB = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
+
 
         // SET BUTTONS
         setButtons();
@@ -87,13 +92,17 @@ public class MainActivity extends AppCompatActivity {
         // PREPARE VIEWS
         layout = findViewById(R.id.layout);
         defaultColor = ContextCompat.getColor(MainActivity.this, R.color.white);
-        imageViewSolid = findViewById(R.id.image_solid);
-        buttonColorPickerSolid = findViewById(R.id.open_colorpicker);
-        buttonColorPickerGradientA = findViewById(R.id.open_gradient_colorpicker_a);
-        buttonColorPickerGradientB = findViewById(R.id.open_gradient_colorpicker_b);
-        buttonSetWallpaper = findViewById(R.id.set_wallpaper);
         buttonSwitchSolid = findViewById(R.id.button_solid);
         buttonSwitchGradient = findViewById(R.id.button_gradient);
+        buttonSetWallpaper = findViewById(R.id.set_wallpaper);
+
+        imageViewSolid = findViewById(R.id.image_solid);
+        buttonColorPickerSolid = findViewById(R.id.open_colorpicker);
+
+        imageViewGradientA = findViewById(R.id.image_gradient_a);
+        imageViewGradientB = findViewById(R.id.image_gradient_b);
+        buttonColorPickerGradientA = findViewById(R.id.open_gradient_colorpicker_a);
+        buttonColorPickerGradientB = findViewById(R.id.open_gradient_colorpicker_b);
 
         // PREPARE CONTAINER LAYOUT
         layoutSolid = findViewById(R.id.solid_layout);
@@ -124,21 +133,21 @@ public class MainActivity extends AppCompatActivity {
         buttonColorPickerSolid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openColorPickerSolid();
+                openColorPicker("solid");
             }
         });
 
         buttonColorPickerGradientA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                openColorPicker("gradient_a");
             }
         });
 
         buttonColorPickerGradientB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                openColorPicker("gradient_b");
             }
         });
 
@@ -152,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void openColorPickerSolid() {
+    private void openColorPicker(String type) {
         AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
@@ -162,30 +171,37 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 defaultColor = color;
-                setColorDrawable();
-                setBitmapSolid();
+                if (type.equals("solid")) {
+                    setColorDrawable();
+                    createBitmapSolid();
+                    imageViewSolid.setImageBitmap(bitmapSolid);
+                } else if (type.equals("gradient_a")) {
+                    setGradientDrawable();
+                    setBitmapGradient("gradient_a");
+                    imageViewGradientA.setImageBitmap(bitmapGradientA);
+                } else if (type.equals("gradient_b")) {
+                    setGradientDrawable();
+                    setBitmapGradient("gradient_b");
+                    imageViewGradientB.setImageBitmap(bitmapGradientB);
+                }
+
 //                setGradientDrawable();
 //                setBitmapGradient();
-                imageViewSolid.setImageBitmap(bitmap);
+
             }
         });
         colorPicker.show();
     }
 
-    public void setBitmapSolid() {
-        Canvas canvas = new Canvas(bitmap);
-        colorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        colorDrawable.draw(canvas);
-    }
-
-    public void setBitmapGradient() {
-        Canvas canvas = new Canvas(bitmap);
-        gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        gradientDrawable.draw(canvas);
-    }
 
     public void setColorDrawable() {
         colorDrawable = new ColorDrawable(defaultColor);
+    }
+
+    public void createBitmapSolid() {
+        Canvas canvas = new Canvas(bitmapSolid);
+        colorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        colorDrawable.draw(canvas);
     }
 
     public void setGradientDrawable() {
@@ -195,15 +211,24 @@ public class MainActivity extends AppCompatActivity {
         gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
     }
 
+    public void setBitmapGradient(String type) {
+        Canvas canvas = new Canvas(bitmapGradientA);
+        if (type.equals("gradient_b")) {
+            canvas = new Canvas(bitmapGradientB);
+        }
+        gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        gradientDrawable.draw(canvas);
+    }
+
+
     public void setWallpaper() {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
         try {
-            wallpaperManager.setBitmap(bitmap);
+            wallpaperManager.setBitmap(bitmapSolid);
             Toast.makeText(this, "Done!", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Toast.makeText(this, "Error.", Toast.LENGTH_LONG).show();
         }
     }
-
 
 }
