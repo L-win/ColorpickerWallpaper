@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout layoutSolid, layoutGradient;
     int defaultColor;
     Button buttonColorPickerSolid, buttonSetWallpaper, buttonSwitchSolid, buttonSwitchGradient;
+    Button buttonColorPickerGradientA, buttonColorPickerGradientB;
     ImageView imageViewSolid;
 
     Bitmap bitmap = null;
@@ -50,10 +51,46 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Colorpicker Wallpaper");
 
         // PREPARE VIEWS
+        prepareViews();
+
+        // CREATE BITMAP
+        bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
+
+        // SET BUTTONS
+        setButtons();
+
+        // TEST
+//        System.out.println("Test-1: "+defaultColor);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about_app:
+                Intent intentA = new Intent(this, AboutActivity.class);
+                startActivityForResult(intentA, 1);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private void prepareViews() {
+        // PREPARE VIEWS
         layout = findViewById(R.id.layout);
         defaultColor = ContextCompat.getColor(MainActivity.this, R.color.white);
         imageViewSolid = findViewById(R.id.image_solid);
         buttonColorPickerSolid = findViewById(R.id.open_colorpicker);
+        buttonColorPickerGradientA = findViewById(R.id.open_gradient_colorpicker_a);
+        buttonColorPickerGradientB = findViewById(R.id.open_gradient_colorpicker_b);
         buttonSetWallpaper = findViewById(R.id.set_wallpaper);
         buttonSwitchSolid = findViewById(R.id.button_solid);
         buttonSwitchGradient = findViewById(R.id.button_gradient);
@@ -61,23 +98,10 @@ public class MainActivity extends AppCompatActivity {
         // PREPARE CONTAINER LAYOUT
         layoutSolid = findViewById(R.id.solid_layout);
         layoutGradient = findViewById(R.id.gradient_layout);
+    }
 
-        // CREATE BITMAP
-        bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
+    private void setButtons() {
 
-        // SET BUTTONS
-        buttonColorPickerSolid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openColorPickerSolid();
-            }
-        });
-        buttonSetWallpaper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setWallpaper();
-            }
-        });
         buttonSwitchSolid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
                 buttonSwitchGradient.setBackgroundResource(R.drawable.button_background);
                 layoutSolid.setVisibility(LinearLayout.VISIBLE);
                 layoutGradient.setVisibility(LinearLayout.GONE);
-
             }
         });
         buttonSwitchGradient.setOnClickListener(new View.OnClickListener() {
@@ -98,8 +121,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // TEST
-//        System.out.println("Test-1: "+defaultColor);
+        buttonColorPickerSolid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openColorPickerSolid();
+            }
+        });
+
+        buttonColorPickerGradientA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        buttonColorPickerGradientB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        buttonSetWallpaper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setWallpaper();
+            }
+        });
+
     }
 
     public void openColorPickerSolid() {
@@ -128,9 +178,9 @@ public class MainActivity extends AppCompatActivity {
         colorDrawable.draw(canvas);
     }
 
-    public void setBitmapGradient(){
+    public void setBitmapGradient() {
         Canvas canvas = new Canvas(bitmap);
-        gradientDrawable.setBounds(0,0,canvas.getWidth(),canvas.getHeight());
+        gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         gradientDrawable.draw(canvas);
     }
 
@@ -138,9 +188,9 @@ public class MainActivity extends AppCompatActivity {
         colorDrawable = new ColorDrawable(defaultColor);
     }
 
-    public void setGradientDrawable(){
+    public void setGradientDrawable() {
 //        int colors[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };
-        int colors[] = { 0xff255779 , 0xFFABDFFF };
+        int colors[] = {0xff255779, 0xFFABDFFF};
 
         gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
     }
@@ -155,22 +205,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.about_app:
-                Intent intentA = new Intent(this, AboutActivity.class);
-                startActivityForResult(intentA, 1);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }
