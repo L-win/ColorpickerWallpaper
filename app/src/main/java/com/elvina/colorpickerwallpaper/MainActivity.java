@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
     ConstraintLayout layout;
     LinearLayout layoutSolid, layoutGradient;
     int defaultColor;
-    Button buttonColorPicker, buttonSetWallpaper, buttonSwitchSolid, buttonSwitchGradient;
-    ImageView imageView;
+    Button buttonColorPickerSolid, buttonSetWallpaper, buttonSwitchSolid, buttonSwitchGradient;
+    ImageView imageViewSolid;
 
     Bitmap bitmap = null;
     ColorDrawable colorDrawable;
@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
         // PREPARE VIEWS
         layout = findViewById(R.id.layout);
         defaultColor = ContextCompat.getColor(MainActivity.this, R.color.white);
-        imageView = findViewById(R.id.image);
-        buttonColorPicker = findViewById(R.id.open_colorpicker);
+        imageViewSolid = findViewById(R.id.image_solid);
+        buttonColorPickerSolid = findViewById(R.id.open_colorpicker);
         buttonSetWallpaper = findViewById(R.id.set_wallpaper);
         buttonSwitchSolid = findViewById(R.id.button_solid);
         buttonSwitchGradient = findViewById(R.id.button_gradient);
@@ -66,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
         bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
 
         // SET BUTTONS
-        buttonColorPicker.setOnClickListener(new View.OnClickListener() {
+        buttonColorPickerSolid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openColorPicker();
+                openColorPickerSolid();
             }
         });
         buttonSetWallpaper.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 //        System.out.println("Test-1: "+defaultColor);
     }
 
-    public void openColorPicker() {
+    public void openColorPickerSolid() {
         AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
@@ -112,11 +112,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 defaultColor = color;
-//                setColorDrawable();
-//                setBitmapSolid();
-                setGradientDrawable();
-                setBitmapGradient();
-                imageView.setImageBitmap(bitmap);
+                setColorDrawable();
+                setBitmapSolid();
+//                setGradientDrawable();
+//                setBitmapGradient();
+                imageViewSolid.setImageBitmap(bitmap);
             }
         });
         colorPicker.show();
