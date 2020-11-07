@@ -29,9 +29,9 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout layout;
+    LinearLayout layoutSolid, layoutGradient;
     int defaultColor;
-    Button buttonColorPicker;
-    Button buttonSetWallpaper;
+    Button buttonColorPicker, buttonSetWallpaper, buttonSwitchSolid, buttonSwitchGradient;
     ImageView imageView;
 
     Bitmap bitmap = null;
@@ -55,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.image);
         buttonColorPicker = findViewById(R.id.open_colorpicker);
         buttonSetWallpaper = findViewById(R.id.set_wallpaper);
+        buttonSwitchSolid = findViewById(R.id.button_solid);
+        buttonSwitchGradient = findViewById(R.id.button_gradient);
+
+        // PREPARE CONTAINER LAYOUT
+        layoutSolid = findViewById(R.id.solid_layout);
+        layoutGradient = findViewById(R.id.gradient_layout);
 
         // CREATE BITMAP
         bitmap = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
@@ -70,6 +76,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setWallpaper();
+            }
+        });
+        buttonSwitchSolid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonSwitchSolid.setBackgroundResource(R.drawable.button_active_background);
+                buttonSwitchGradient.setBackgroundResource(R.drawable.button_background);
+                layoutSolid.setVisibility(LinearLayout.VISIBLE);
+                layoutGradient.setVisibility(LinearLayout.GONE);
+
+            }
+        });
+        buttonSwitchGradient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonSwitchSolid.setBackgroundResource(R.drawable.button_background);
+                buttonSwitchGradient.setBackgroundResource(R.drawable.button_active_background);
+                layoutSolid.setVisibility(LinearLayout.GONE);
+                layoutGradient.setVisibility(LinearLayout.VISIBLE);
             }
         });
 
