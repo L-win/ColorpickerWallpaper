@@ -38,8 +38,11 @@ public class MainActivity extends AppCompatActivity {
     Bitmap bitmapSolid = null;
     Bitmap bitmapGradientA = null;
     Bitmap bitmapGradientB = null;
+    Bitmap bitmapGradientFinish = null;
     ColorDrawable colorDrawableSolid, colorDrawableGradientA, colorDrawableGradientB;
     GradientDrawable gradientDrawable;
+
+    boolean layoutSwitchState = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         bitmapSolid = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
         bitmapGradientA = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
         bitmapGradientB = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
-
+        bitmapGradientFinish = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
 
         // SET BUTTONS
         setButtons();
@@ -118,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonSwitchGradient.setBackgroundResource(R.drawable.button_background);
                 layoutSolid.setVisibility(LinearLayout.VISIBLE);
                 layoutGradient.setVisibility(LinearLayout.GONE);
+                layoutSwitchState = false;
             }
         });
         buttonSwitchGradient.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonSwitchGradient.setBackgroundResource(R.drawable.button_active_background);
                 layoutSolid.setVisibility(LinearLayout.GONE);
                 layoutGradient.setVisibility(LinearLayout.VISIBLE);
+                layoutSwitchState = true;
             }
         });
 
@@ -155,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
         buttonSetWallpaper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setGradientDrawableFinish();
+                createGradientBitmapFinish();
                 setWallpaper();
             }
         });
@@ -170,36 +177,24 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
-
                 if (type.equals("solid")) {
-//                    defaultColorSolid = color;
                     colorDrawableSolid = new ColorDrawable(color);
-//                    setColorDrawable();
                     createBitmapSolid();
                     imageViewSolid.setImageBitmap(bitmapSolid);
                 } else if (type.equals("gradient_a")) {
+                    defaultColorGradientA = color;
                     colorDrawableGradientA = new ColorDrawable(color);
-//                    setGradientDrawableFinish();
                     setBitmapGradient("gradient_a");
                     imageViewGradientA.setImageBitmap(bitmapGradientA);
                 } else if (type.equals("gradient_b")) {
+                    defaultColorGradientB = color;
                     colorDrawableGradientB = new ColorDrawable(color);
-//                    setGradientDrawableFinish();
                     setBitmapGradient("gradient_b");
                     imageViewGradientB.setImageBitmap(bitmapGradientB);
                 }
-
-//                setGradientDrawableFinish();
-//                setBitmapGradient();
-
             }
         });
         colorPicker.show();
-    }
-
-
-    public void setColorDrawable() {
-
     }
 
     public void createBitmapSolid() {
@@ -208,12 +203,6 @@ public class MainActivity extends AppCompatActivity {
         colorDrawableSolid.draw(canvas);
     }
 
-    public void setGradientDrawableFinish() {
-//        int colors[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };
-        int colors[] = {0xff255779, 0xFFABDFFF};
-
-        gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
-    }
 
     public void setBitmapGradient(String type) {
 
@@ -226,20 +215,31 @@ public class MainActivity extends AppCompatActivity {
             colorDrawableGradientB.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
             colorDrawableGradientB.draw(canvas);
         }
-
-//        gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-//        gradientDrawable.draw(canvas);
     }
 
+    public void setGradientDrawableFinish() {
+        // int colors[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };
+        int colors[] = {defaultColorGradientA, defaultColorGradientB};
+        gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
+    }
+
+    private void createGradientBitmapFinish() {
+        Canvas canvas = new Canvas(bitmapGradientFinish);
+        gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        gradientDrawable.draw(canvas);
+    }
 
     public void setWallpaper() {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
         try {
-            wallpaperManager.setBitmap(bitmapSolid);
+            if (!layoutSwitchState){
+                wallpaperManager.setBitmap(bitmapSolid);
+            }else{
+                wallpaperManager.setBitmap(bitmapGradientFinish);
+            }
             Toast.makeText(this, "Done!", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Toast.makeText(this, "Error.", Toast.LENGTH_LONG).show();
         }
     }
-
 }
