@@ -46,24 +46,27 @@
     </LinearLayout>
 
     <!--    LAYOUT HOLDER-->
+
+    <!--    SET WALLPAPER-->
+
     <LinearLayout
         android:id="@+id/layout_holder"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="130dp"
         android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_layout"
-        app:layout_constraintVertical_bias="0.077">
+        app:layout_constraintVertical_bias="0.555">
 
         <LinearLayout
             android:id="@+id/solid_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/open_colorpicker"
@@ -71,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:width="170dp"
+                android:width="160dp"
                 android:backgroundTint="@color/white"
                 android:text="Select Color" />
 
@@ -84,21 +87,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/open_gradient_colorpicker_a"
-                android:layout_width="150dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:backgroundTint="@color/white"
                 android:text="SELECT COLOR A" />
 
             <Button
                 android:id="@+id/open_gradient_colorpicker_b"
-                android:layout_width="150dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:backgroundTint="@color/white"
                 android:text="SELET COLOR B" />
 
@@ -107,20 +108,19 @@
 
     </LinearLayout>
 
-    <!--    SET WALLPAPER-->
     <Button
         android:id="@+id/set_wallpaper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="297dp"
+        android:layout_height="46dp"
         android:layout_gravity="center"
         android:width="170dp"
         android:backgroundTint="@color/white"
         android:text="Set Wallpaper"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_holder"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintVertical_bias="0.389" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
