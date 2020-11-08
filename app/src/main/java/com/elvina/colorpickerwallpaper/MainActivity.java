@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout layout;
     LinearLayout layoutSolid, layoutGradient;
-    int defaultColor;
+    int defaultColorSolid, defaultColorGradientA, defaultColorGradientB;
     Button buttonColorPickerSolid, buttonSetWallpaper, buttonSwitchSolid, buttonSwitchGradient;
     Button buttonColorPickerGradientA, buttonColorPickerGradientB;
     ImageView imageViewSolid, imageViewGradientA, imageViewGradientB;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Bitmap bitmapSolid = null;
     Bitmap bitmapGradientA = null;
     Bitmap bitmapGradientB = null;
-    ColorDrawable colorDrawable;
+    ColorDrawable colorDrawableSolid, colorDrawableGradientA, colorDrawableGradientB;
     GradientDrawable gradientDrawable;
 
     @Override
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         setButtons();
 
         // TEST
-//        System.out.println("Test-1: "+defaultColor);
+//        System.out.println("Test-1: "+defaultColorSolid);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     private void prepareViews() {
         // PREPARE VIEWS
         layout = findViewById(R.id.layout);
-        defaultColor = ContextCompat.getColor(MainActivity.this, R.color.white);
+        defaultColorSolid = ContextCompat.getColor(MainActivity.this, R.color.white);
         buttonSwitchSolid = findViewById(R.id.button_solid);
         buttonSwitchGradient = findViewById(R.id.button_gradient);
         buttonSetWallpaper = findViewById(R.id.set_wallpaper);
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openColorPicker(String type) {
-        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, defaultColorSolid, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
 
@@ -170,22 +170,26 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
-                defaultColor = color;
+
                 if (type.equals("solid")) {
-                    setColorDrawable();
+//                    defaultColorSolid = color;
+                    colorDrawableSolid = new ColorDrawable(color);
+//                    setColorDrawable();
                     createBitmapSolid();
                     imageViewSolid.setImageBitmap(bitmapSolid);
                 } else if (type.equals("gradient_a")) {
-                    setGradientDrawable();
+                    colorDrawableGradientA = new ColorDrawable(color);
+//                    setGradientDrawableFinish();
                     setBitmapGradient("gradient_a");
                     imageViewGradientA.setImageBitmap(bitmapGradientA);
                 } else if (type.equals("gradient_b")) {
-                    setGradientDrawable();
+                    colorDrawableGradientB = new ColorDrawable(color);
+//                    setGradientDrawableFinish();
                     setBitmapGradient("gradient_b");
                     imageViewGradientB.setImageBitmap(bitmapGradientB);
                 }
 
-//                setGradientDrawable();
+//                setGradientDrawableFinish();
 //                setBitmapGradient();
 
             }
@@ -195,16 +199,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setColorDrawable() {
-        colorDrawable = new ColorDrawable(defaultColor);
+
     }
 
     public void createBitmapSolid() {
         Canvas canvas = new Canvas(bitmapSolid);
-        colorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        colorDrawable.draw(canvas);
+        colorDrawableSolid.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        colorDrawableSolid.draw(canvas);
     }
 
-    public void setGradientDrawable() {
+    public void setGradientDrawableFinish() {
 //        int colors[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };
         int colors[] = {0xff255779, 0xFFABDFFF};
 
@@ -212,12 +216,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setBitmapGradient(String type) {
-        Canvas canvas = new Canvas(bitmapGradientA);
-        if (type.equals("gradient_b")) {
-            canvas = new Canvas(bitmapGradientB);
+
+        if (type.equals("gradient_a")) {
+            Canvas canvas = new Canvas(bitmapGradientA);
+            colorDrawableGradientA.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            colorDrawableGradientA.draw(canvas);
+        } else if (type.equals("gradient_b")) {
+            Canvas canvas = new Canvas(bitmapGradientB);
+            colorDrawableGradientB.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            colorDrawableGradientB.draw(canvas);
         }
-        gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        gradientDrawable.draw(canvas);
+
+//        gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+//        gradientDrawable.draw(canvas);
     }
 
 
