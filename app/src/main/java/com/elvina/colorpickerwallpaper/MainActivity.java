@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     ColorDrawable colorDrawableSolid, colorDrawableGradientA, colorDrawableGradientB;
     GradientDrawable gradientDrawable;
 
-    boolean layoutSwitchState = false;
+    String layoutSwitchState = "solid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,11 +99,11 @@ public class MainActivity extends AppCompatActivity {
         buttonSwitchGradient = findViewById(R.id.button_gradient);
         buttonSetWallpaper = findViewById(R.id.set_wallpaper);
 
-        imageViewSolid = findViewById(R.id.image_solid);
+//        imageViewSolid = findViewById(R.id.image_solid);
         buttonColorPickerSolid = findViewById(R.id.open_colorpicker);
 
-        imageViewGradientA = findViewById(R.id.image_gradient_a);
-        imageViewGradientB = findViewById(R.id.image_gradient_b);
+//        imageViewGradientA = findViewById(R.id.image_gradient_a);
+//        imageViewGradientB = findViewById(R.id.image_gradient_b);
         buttonColorPickerGradientA = findViewById(R.id.open_gradient_colorpicker_a);
         buttonColorPickerGradientB = findViewById(R.id.open_gradient_colorpicker_b);
 
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonSwitchGradient.setBackgroundResource(R.drawable.button_background);
                 layoutSolid.setVisibility(LinearLayout.VISIBLE);
                 layoutGradient.setVisibility(LinearLayout.GONE);
-                layoutSwitchState = false;
+                layoutSwitchState = "solid";
             }
         });
         buttonSwitchGradient.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonSwitchGradient.setBackgroundResource(R.drawable.button_active_background);
                 layoutSolid.setVisibility(LinearLayout.GONE);
                 layoutGradient.setVisibility(LinearLayout.VISIBLE);
-                layoutSwitchState = true;
+                layoutSwitchState = "gradient";
             }
         });
 
@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openColorPicker("gradient_a");
+
             }
         });
 
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openColorPicker("gradient_b");
+
             }
         });
 
@@ -160,9 +162,10 @@ public class MainActivity extends AppCompatActivity {
         buttonSetWallpaper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setGradientDrawableFinish();
-                createGradientBitmapFinish();
+//                setGradientDrawableFinish();
+//                createGradientBitmapFinish();
                 setWallpaper();
+//                setAppBackground();
             }
         });
 
@@ -180,31 +183,37 @@ public class MainActivity extends AppCompatActivity {
                 if (type.equals("solid")) {
                     colorDrawableSolid = new ColorDrawable(color);
                     createBitmapSolid();
-                    imageViewSolid.setImageBitmap(bitmapSolid);
+//                    imageViewSolid.setImageBitmap(bitmapSolid);
+                    setAppBackground("solid");
                 } else if (type.equals("gradient_a")) {
                     defaultColorGradientA = color;
                     colorDrawableGradientA = new ColorDrawable(color);
                     setBitmapGradient("gradient_a");
-                    imageViewGradientA.setImageBitmap(bitmapGradientA);
+//                    imageViewGradientA.setImageBitmap(bitmapGradientA);
+                    setGradientDrawableFinish();
+                    setAppBackground("gradient");
                 } else if (type.equals("gradient_b")) {
                     defaultColorGradientB = color;
                     colorDrawableGradientB = new ColorDrawable(color);
                     setBitmapGradient("gradient_b");
-                    imageViewGradientB.setImageBitmap(bitmapGradientB);
+//                    imageViewGradientB.setImageBitmap(bitmapGradientB);
+                    setGradientDrawableFinish();
+                    createGradientBitmapFinish();
+                    setAppBackground("gradient");
                 }
             }
         });
         colorPicker.show();
+
     }
 
-    public void createBitmapSolid() {
+    private void createBitmapSolid() {
         Canvas canvas = new Canvas(bitmapSolid);
         colorDrawableSolid.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         colorDrawableSolid.draw(canvas);
     }
 
-
-    public void setBitmapGradient(String type) {
+    private void setBitmapGradient(String type) {
 
         if (type.equals("gradient_a")) {
             Canvas canvas = new Canvas(bitmapGradientA);
@@ -217,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setGradientDrawableFinish() {
+    private void setGradientDrawableFinish() {
         // int colors[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };
         int colors[] = {defaultColorGradientA, defaultColorGradientB};
         gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
@@ -229,10 +238,10 @@ public class MainActivity extends AppCompatActivity {
         gradientDrawable.draw(canvas);
     }
 
-    public void setWallpaper() {
+    private void setWallpaper() {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
         try {
-            if (!layoutSwitchState){
+            if (layoutSwitchState.equals("solid")){
                 wallpaperManager.setBitmap(bitmapSolid);
             }else{
                 wallpaperManager.setBitmap(bitmapGradientFinish);
@@ -241,5 +250,14 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(this, "Error.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void setAppBackground(String type){
+        if(type.equals("gradient")){
+            layout.setBackground(gradientDrawable);
+        }else if (type.equals("solid")){
+            layout.setBackground(colorDrawableSolid);
+        }
+
     }
 }
