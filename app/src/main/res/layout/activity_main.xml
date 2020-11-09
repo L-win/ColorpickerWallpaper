@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_switch_left_on"
-            android:text="SOLID"
+            android:text="@string/buttonSwitchSolidBold"
             android:textColor="@color/white"
             android:backgroundTint="@color/white"/>
 
@@ -42,15 +42,11 @@
             android:id="@+id/button_gradient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_switch_left_off"
-            android:text="GRADIENT"
+            android:background="@drawable/button_switch_right_off"
+            android:text="@string/buttonSwitchGradientNormal"
             android:textColor="@color/white"/>
 
     </LinearLayout>
-
-    <!--    LAYOUT HOLDER-->
-
-    <!--    SET WALLPAPER-->
 
     <LinearLayout
         android:id="@+id/layout_holder"
@@ -73,17 +69,16 @@
 
             <Button
                 android:id="@+id/open_colorpicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:width="160dp"
                 android:backgroundTint="@color/white"
                 android:text="Color"
+                android:paddingLeft="20dp"
                 android:drawableLeft="@drawable/ic_baseline_color_lens_24"/>
 
         </LinearLayout>
-
+<!--        android:backgroundTint="@color/white"-->
 
         <LinearLayout
             android:id="@+id/gradient_layout"
@@ -95,7 +90,7 @@
 
             <Button
                 android:id="@+id/open_gradient_colorpicker_a"
-                android:layout_width="160dp"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:text="TOP COLOR"
@@ -103,7 +98,7 @@
 
             <Button
                 android:id="@+id/open_gradient_colorpicker_b"
-                android:layout_width="160dp"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:text="BOTTOM COLOR"
@@ -116,8 +111,8 @@
 
     <Button
         android:id="@+id/set_wallpaper"
-        android:layout_width="297dp"
-        android:layout_height="46dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:width="170dp"
         android:backgroundTint="@color/white"

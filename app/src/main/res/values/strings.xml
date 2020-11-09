@@ -7,4 +7,10 @@
     </string>
     <string name="app_current_version">v1.0, November 2020</string>
     <string name="app_recent_change">Nov 1, 2020. First release.</string>
+
+<!--    Buttons-->
+    <string name="buttonSwitchSolidBold"><b>SOLID</b></string>
+    <string name="buttonSwitchSolidNormal">SOLID</string>
+    <string name="buttonSwitchGradientBold"><b>GRADIENT</b></string>
+    <string name="buttonSwitchGradientNormal">GRADIENT</string>
 </resources>

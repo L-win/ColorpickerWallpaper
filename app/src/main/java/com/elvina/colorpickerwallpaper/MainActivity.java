@@ -10,6 +10,7 @@ import android.app.WallpaperManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -115,7 +116,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonSwitchSolid.setBackgroundResource(R.drawable.button_switch_left_on);
+                buttonSwitchSolid.setText(R.string.buttonSwitchSolidBold);
                 buttonSwitchGradient.setBackgroundResource(R.drawable.button_switch_right_off);
+                buttonSwitchGradient.setText(R.string.buttonSwitchGradientNormal);
+
                 layoutSolid.setVisibility(LinearLayout.VISIBLE);
                 layoutGradient.setVisibility(LinearLayout.GONE);
                 layoutSwitchState = "solid";
@@ -125,7 +129,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonSwitchSolid.setBackgroundResource(R.drawable.button_switch_left_off);
+                buttonSwitchSolid.setText(R.string.buttonSwitchSolidNormal);
                 buttonSwitchGradient.setBackgroundResource(R.drawable.button_switch_right_on);
+                buttonSwitchGradient.setText(R.string.buttonSwitchGradientBold);
+
                 layoutSolid.setVisibility(LinearLayout.GONE);
                 layoutGradient.setVisibility(LinearLayout.VISIBLE);
                 layoutSwitchState = "gradient";
