@@ -191,6 +191,8 @@ public class MainActivity extends AppCompatActivity {
                     setBitmapGradient("gradient_a");
 //                    imageViewGradientA.setImageBitmap(bitmapGradientA);
                     setGradientDrawableFinish();
+                    // TODO: DOES NOT WORK SOMETIMES
+                    createGradientBitmapFinish();
                     setAppBackground("gradient");
                 } else if (type.equals("gradient_b")) {
                     defaultColorGradientB = color;

@@ -35,8 +35,7 @@
             android:layout_height="40dp"
             android:background="@drawable/button_switch_left_on"
             android:text="@string/buttonSwitchSolidBold"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/button_gradient"
@@ -44,7 +43,7 @@
             android:layout_height="40dp"
             android:background="@drawable/button_switch_right_off"
             android:text="@string/buttonSwitchGradientNormal"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
@@ -52,12 +51,12 @@
         android:id="@+id/layout_holder"
         android:layout_width="wrap_content"
         android:layout_height="130dp"
-        android:padding="15dp"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch_layout"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.555">
 
         <LinearLayout
@@ -72,25 +71,17 @@
                 android:layout_width="160dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:drawableTint="@color/black"
-                android:backgroundTint="@color/white"
-                android:text="Color"
+                android:background="@drawable/custom_button"
+                android:drawableLeft="@drawable/ic_baseline_color_lens_24"
+                android:drawablePadding="20dp"
+                android:drawableTint="@color/white"
+                android:gravity="center|left"
                 android:paddingLeft="20dp"
-                android:drawableLeft="@drawable/ic_baseline_color_lens_24"/>
-
-            <Button
-
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/white"
-                android:foregroundTint="@color/teal_700"
                 android:text="Color"
-                android:paddingLeft="20dp"
-                android:drawableLeft="@drawable/ic_baseline_color_lens_24"/>
+                android:textColor="@color/white" />
 
         </LinearLayout>
-<!--        android:backgroundTint="@color/white"-->
+        <!--        android:backgroundTint="@color/white"-->
 
         <LinearLayout
             android:id="@+id/gradient_layout"
@@ -103,32 +94,50 @@
             <Button
                 android:id="@+id/open_gradient_colorpicker_a"
                 android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_button"
+                android:drawableLeft="@drawable/ic_baseline_color_lens_24"
+                android:drawablePadding="20dp"
+                android:drawableTint="@color/white"
+                android:gravity="center|left"
+                android:paddingLeft="20dp"
                 android:text="TOP COLOR"
-                android:drawableLeft="@drawable/ic_baseline_color_lens_24"/>
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/open_gradient_colorpicker_b"
                 android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_button"
+                android:drawableLeft="@drawable/ic_baseline_color_lens_24"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/white"
+                android:gravity="center|left"
+                android:paddingLeft="20dp"
                 android:text="BOTTOM COLOR"
-                android:drawableLeft="@drawable/ic_baseline_color_lens_24"/>
+                android:textColor="@color/white" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 
     <Button
         android:id="@+id/set_wallpaper"
-        android:layout_width="300dp"
+        android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:width="170dp"
-        android:backgroundTint="@color/white"
+        android:background="@drawable/button_set_wallpaper"
+        android:drawableLeft="@drawable/ic_baseline_wallpaper_24"
+        android:drawablePadding="15dp"
+        android:drawableTint="@color/white"
+        android:gravity="center|left"
+        android:paddingLeft="20dp"
         android:text="Set Wallpaper"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
