@@ -9,9 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -113,12 +111,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setButtons() {
-
         buttonSwitchSolid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonSwitchSolid.setBackgroundResource(R.drawable.button_active_background);
-                buttonSwitchGradient.setBackgroundResource(R.drawable.button_background);
+                buttonSwitchSolid.setBackgroundResource(R.drawable.button_switch_left_on);
+                buttonSwitchGradient.setBackgroundResource(R.drawable.button_switch_right_off);
                 layoutSolid.setVisibility(LinearLayout.VISIBLE);
                 layoutGradient.setVisibility(LinearLayout.GONE);
                 layoutSwitchState = "solid";
@@ -127,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
         buttonSwitchGradient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonSwitchSolid.setBackgroundResource(R.drawable.button_background);
-                buttonSwitchGradient.setBackgroundResource(R.drawable.button_active_background);
+                buttonSwitchSolid.setBackgroundResource(R.drawable.button_switch_left_off);
+                buttonSwitchGradient.setBackgroundResource(R.drawable.button_switch_right_on);
                 layoutSolid.setVisibility(LinearLayout.GONE);
                 layoutGradient.setVisibility(LinearLayout.VISIBLE);
                 layoutSwitchState = "gradient";
@@ -141,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
                 openColorPicker("solid");
             }
         });
-
         buttonColorPickerGradientA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         buttonColorPickerGradientB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
         buttonSetWallpaper.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
 //                setAppBackground();
             }
         });
-
     }
 
     private void openColorPicker(String type) {

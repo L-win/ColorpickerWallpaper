@@ -33,15 +33,18 @@
             android:id="@+id/button_solid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_active_background"
-            android:text="SOLID" />
+            android:background="@drawable/button_switch_left_on"
+            android:text="SOLID"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white"/>
 
         <Button
             android:id="@+id/button_gradient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
-            android:text="GRADIENT" />
+            android:background="@drawable/button_switch_left_off"
+            android:text="GRADIENT"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 
@@ -66,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/open_colorpicker"
@@ -76,7 +79,8 @@
                 android:layout_marginTop="20dp"
                 android:width="160dp"
                 android:backgroundTint="@color/white"
-                android:text="Select Color" />
+                android:text="Color"
+                android:drawableLeft="@drawable/ic_baseline_color_lens_24"/>
 
         </LinearLayout>
 
@@ -87,21 +91,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/open_gradient_colorpicker_a"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
-                android:text="SELECT COLOR A" />
+                android:text="TOP COLOR"
+                android:drawableLeft="@drawable/ic_baseline_color_lens_24"/>
 
             <Button
                 android:id="@+id/open_gradient_colorpicker_b"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
-                android:text="SELET COLOR B" />
+                android:text="BOTTOM COLOR"
+                android:drawableLeft="@drawable/ic_baseline_color_lens_24"/>
 
         </LinearLayout>
 
