@@ -31,17 +31,17 @@
 
         <Button
             android:id="@+id/button_solid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
             android:background="@drawable/button_switch_left_on"
             android:text="@string/buttonSwitchSolidBold"
             android:textColor="@color/white"
-            android:backgroundTint="@color/white"/>
+            />
 
         <Button
             android:id="@+id/button_gradient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
             android:background="@drawable/button_switch_right_off"
             android:text="@string/buttonSwitchGradientNormal"
             android:textColor="@color/white"/>
@@ -72,7 +72,19 @@
                 android:layout_width="160dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
+                android:drawableTint="@color/black"
                 android:backgroundTint="@color/white"
+                android:text="Color"
+                android:paddingLeft="20dp"
+                android:drawableLeft="@drawable/ic_baseline_color_lens_24"/>
+
+            <Button
+
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/white"
+                android:foregroundTint="@color/teal_700"
                 android:text="Color"
                 android:paddingLeft="20dp"
                 android:drawableLeft="@drawable/ic_baseline_color_lens_24"/>

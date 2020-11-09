@@ -13,4 +13,7 @@
 
     <color name="aboutTextMain">#000000</color>
     <color name="aboutTetxtSecond">#393939</color>
+
+<!--    BUTTONS-->
+    <color name="buttonBackgroundTransparentWhite">#14FFFFFF</color>
 </resources>
