@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     int defaultColorSolid, defaultColorGradientA, defaultColorGradientB;
     Button buttonColorPickerSolid, buttonSetWallpaper, buttonSwitchSolid, buttonSwitchGradient;
     Button buttonColorPickerGradientA, buttonColorPickerGradientB;
-    ImageView imageViewSolid, imageViewGradientA, imageViewGradientB;
 
     Bitmap bitmapSolid = null;
     Bitmap bitmapGradientA = null;
@@ -58,16 +57,14 @@ public class MainActivity extends AppCompatActivity {
         prepareViews();
 
         // CREATE BITMAP
-        bitmapSolid = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
-        bitmapGradientA = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
-        bitmapGradientB = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
-        bitmapGradientFinish = Bitmap.createBitmap(20, 20, Bitmap.Config.ARGB_8888);
+        bitmapSolid = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+        bitmapGradientA = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+        bitmapGradientB = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+        bitmapGradientFinish = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
 
         // SET BUTTONS
         setButtons();
 
-        // TEST
-//        System.out.println("Test-1: "+defaultColorSolid);
     }
 
     @Override
@@ -98,11 +95,8 @@ public class MainActivity extends AppCompatActivity {
         buttonSwitchGradient = findViewById(R.id.button_gradient);
         buttonSetWallpaper = findViewById(R.id.set_wallpaper);
 
-//        imageViewSolid = findViewById(R.id.image_solid);
         buttonColorPickerSolid = findViewById(R.id.open_colorpicker);
 
-//        imageViewGradientA = findViewById(R.id.image_gradient_a);
-//        imageViewGradientB = findViewById(R.id.image_gradient_b);
         buttonColorPickerGradientA = findViewById(R.id.open_gradient_colorpicker_a);
         buttonColorPickerGradientB = findViewById(R.id.open_gradient_colorpicker_b);
 
@@ -163,10 +157,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSetWallpaper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                setGradientDrawableFinish();
-//                createGradientBitmapFinish();
                 setWallpaper();
-//                setAppBackground();
             }
         });
     }
@@ -183,13 +174,11 @@ public class MainActivity extends AppCompatActivity {
                 if (type.equals("solid")) {
                     colorDrawableSolid = new ColorDrawable(color);
                     createBitmapSolid();
-//                    imageViewSolid.setImageBitmap(bitmapSolid);
                     setAppBackground("solid");
                 } else if (type.equals("gradient_a")) {
                     defaultColorGradientA = color;
                     colorDrawableGradientA = new ColorDrawable(color);
                     setBitmapGradient("gradient_a");
-//                    imageViewGradientA.setImageBitmap(bitmapGradientA);
                     setGradientDrawableFinish();
                     // TODO: DOES NOT WORK SOMETIMES
                     createGradientBitmapFinish();
@@ -198,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
                     defaultColorGradientB = color;
                     colorDrawableGradientB = new ColorDrawable(color);
                     setBitmapGradient("gradient_b");
-//                    imageViewGradientB.setImageBitmap(bitmapGradientB);
                     setGradientDrawableFinish();
                     createGradientBitmapFinish();
                     setAppBackground("gradient");
@@ -229,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setGradientDrawableFinish() {
-        // int colors[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };
         int colors[] = {defaultColorGradientA, defaultColorGradientB};
         gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
     }
@@ -245,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             if (layoutSwitchState.equals("solid")){
                 wallpaperManager.setBitmap(bitmapSolid);
+//                wallpaperManager.setBitmap(bitmapSolid,null,false, WallpaperManager.FLAG_LOCK);
             }else{
                 wallpaperManager.setBitmap(bitmapGradientFinish);
             }
