@@ -12,7 +12,7 @@
 
     </style>
     <style name="Button" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/custom_button</item>
+        <item name="android:background">@drawable/custom_button_normal</item>
 
     </style>
 </resources>
