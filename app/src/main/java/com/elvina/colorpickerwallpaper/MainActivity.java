@@ -16,6 +16,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +28,10 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     ConstraintLayout layout;
     LinearLayout layoutSolid, layoutGradient;
     int defaultColorSolid, defaultColorGradientA, defaultColorGradientB;
-    Button buttonColorPickerSolid, buttonSetWallpaper, buttonSwitchSolid, buttonSwitchGradient;
+    Button buttonColorPickerSolid, buttonSetWallpaper, buttonSwitchSolid, buttonSwitchGradient, buttonSaveImage;
     Button buttonColorPickerGradientA, buttonColorPickerGradientB;
 
     Bitmap bitmapSolid = null;
@@ -61,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
         prepareViews();
 
         // CREATE BITMAP
-        bitmapSolid = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
-        bitmapGradientA = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
-        bitmapGradientB = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
-        bitmapGradientFinish = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+        bitmapSolid = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
+        bitmapGradientA = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
+        bitmapGradientB = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
+        bitmapGradientFinish = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
 
         // SET BUTTONS
         setButtons();
@@ -98,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSwitchSolid = findViewById(R.id.button_solid);
         buttonSwitchGradient = findViewById(R.id.button_gradient);
         buttonSetWallpaper = findViewById(R.id.set_wallpaper);
+        buttonSaveImage = findViewById(R.id.save_image);
 
         buttonColorPickerSolid = findViewById(R.id.open_colorpicker);
 
@@ -155,6 +161,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 openColorPicker("gradient_b");
 
+            }
+        });
+
+        buttonSaveImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveImage();
             }
         });
 
@@ -248,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             if (layoutSwitchState.equals("solid")){
                 wallpaperManager.setBitmap(bitmapSolid);
+                    //TODO: SET LOCK SCREEN WALLPAPER
 //                wallpaperManager.setBitmap(bitmapSolid,null,false, WallpaperManager.FLAG_LOCK);
             }else{
                 wallpaperManager.setBitmap(bitmapGradientFinish);
@@ -264,6 +278,36 @@ public class MainActivity extends AppCompatActivity {
         }else if (type.equals("solid")){
             layout.setBackground(colorDrawableSolid);
         }
-
     }
+
+    private void saveImage() {
+        File filePath = Environment.getExternalStorageDirectory();
+        File dir = new File(filePath.getAbsolutePath() + "/ColorpickerWallpaper/");
+        dir.mkdir();
+        File file = new File(dir, System.currentTimeMillis() + ".jpg");
+        OutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(file);
+        } catch (Exception e) {
+            System.out.println("TEST-0: Output exception: " + e);
+        }
+        if (layoutSwitchState.equals("solid")){
+            bitmapSolid.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        }else{
+            bitmapGradientFinish.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        }
+
+        try {
+            outputStream.flush();
+        } catch (Exception e) {
+
+        }
+        try {
+            outputStream.close();
+        } catch (Exception e) {
+
+        }
+        Toast.makeText(this, "Saved to External Storage", Toast.LENGTH_SHORT).show();
+    }
+
 }
