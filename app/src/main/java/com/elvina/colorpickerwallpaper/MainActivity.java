@@ -266,9 +266,9 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 wallpaperManager.setBitmap(bitmapGradientFinish);
             }
-            Toast.makeText(this, "Done!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(this, "Error.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error.", Toast.LENGTH_SHORT).show();
         }
     }
 
