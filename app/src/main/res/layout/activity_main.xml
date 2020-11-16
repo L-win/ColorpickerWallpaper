@@ -47,8 +47,7 @@
 
     <!--    COLORPICKER BUTTONS-->
 
-    <!--    SET-->
-
+    <!--    FUN-->
 
     <LinearLayout
         android:id="@+id/layout_holder"
@@ -81,7 +80,6 @@
                 android:paddingLeft="20dp"
                 android:text="Color"
                 android:textColor="@color/white" />
-
 
         </LinearLayout>
 
