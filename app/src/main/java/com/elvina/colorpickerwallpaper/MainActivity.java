@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             if (layoutSwitchState.equals("solid")){
                 wallpaperManager.setBitmap(bitmapSolid);
-                    //TODO: SET LOCK SCREEN WALLPAPER
+                //TODO: SET LOCK SCREEN WALLPAPER
 //                wallpaperManager.setBitmap(bitmapSolid,null,false, WallpaperManager.FLAG_LOCK);
             }else{
                 wallpaperManager.setBitmap(bitmapGradientFinish);
