@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
 import android.app.WallpaperManager;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,8 +17,12 @@ import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.media.Image;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,7 +36,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Objects;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -73,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
         // SET BUTTONS
         setButtons();
+
+        // TEST
+        System.out.println("TEST-0: --- Running App ----");
 
     }
 
@@ -167,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSaveImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveImage();
+                saveImageNew();
             }
         });
 
@@ -280,17 +291,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void saveImage() {
+    private void saveImageOld() {
         File filePath = Environment.getExternalStorageDirectory();
         File dir = new File(filePath.getAbsolutePath() + "/ColorpickerWallpaper/");
+
         dir.mkdir();
+
         File file = new File(dir, System.currentTimeMillis() + ".jpg");
         OutputStream outputStream = null;
+
         try {
             outputStream = new FileOutputStream(file);
         } catch (Exception e) {
             System.out.println("TEST-0: Output exception: " + e);
         }
+
         if (layoutSwitchState.equals("solid")){
             bitmapSolid.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
         }else{
@@ -310,4 +325,56 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Saved to External Storage", Toast.LENGTH_SHORT).show();
     }
 
+    private void saveImageNew(){
+
+        OutputStream fos = null;
+        boolean picturesDirExists = true;
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                // ANDROID 10 AND ABOVE
+                ContentResolver resolver = getContentResolver();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, System.currentTimeMillis() + ".jpg");
+                contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
+                contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+
+                Uri url;
+                Uri ImageUri = resolver.insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+                fos = resolver.openOutputStream(Objects.requireNonNull(ImageUri));
+            } else {
+                // ANDROID 9 AND BELOW
+                if (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).exists()
+                        && Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).isDirectory()){
+                    System.out.println("TEST-0: Directory exists");
+                }else {
+                    System.out.println("TEST-0: Directory does not exists");
+                    picturesDirExists = false;
+                }
+
+                String ImagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+
+                File image = new File(ImagesDir, System.currentTimeMillis() + ".jpg");
+                fos = new FileOutputStream(image);
+            }
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        if (picturesDirExists){
+            if (layoutSwitchState.equals("solid")){
+                bitmapSolid.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            }else{
+                bitmapGradientFinish.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            }
+            Toast.makeText(this, "Saved to External Storage", Toast.LENGTH_LONG).show();
+        } else{
+            Toast.makeText(this, "Error! Pictures directory does not exist", Toast.LENGTH_LONG).show();
+        }
+
+    }
 }
