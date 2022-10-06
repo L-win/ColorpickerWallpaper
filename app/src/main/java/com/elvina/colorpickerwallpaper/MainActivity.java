@@ -203,7 +203,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openColorPicker(String type) {
-        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, defaultColorSolid, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(
+                this, defaultColorSolid, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
 
@@ -359,8 +360,7 @@ public class MainActivity extends AppCompatActivity {
                 File image = new File(ImagesDir, System.currentTimeMillis() + ".jpg");
                 fos = new FileOutputStream(image);
             }
-
-
+            
         } catch (Exception e) {
             System.out.println(e);
         }
